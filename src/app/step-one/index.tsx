@@ -1,18 +1,28 @@
 import { View, ScrollView, Text, Pressable } from "react-native";
+import { router } from "expo-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Header } from "@/src/components/header";
 import { styles } from "@/src/styles/step-one";
 import { Input } from "@/src/components/input";
-import { stepSchema, StepSchemaType } from "@/src/validations/step";
+import { stepOneSchema, StepOneSchemaType } from "@/src/validations/step-one";
+import { useStepsStore } from "@/src/store/step-data";
 
 export default function StepOne() {
   const {
     control,
-    formState: { errors, isValid },
-  } = useForm<StepSchemaType>({
-    resolver: zodResolver(stepSchema),
+    handleSubmit,
+    formState: { errors },
+  } = useForm<StepOneSchemaType>({
+    resolver: zodResolver(stepOneSchema),
   });
+
+  const { setStepOne } = useStepsStore();
+
+  function handleNextStep(data: StepOneSchemaType) {
+    setStepOne(data);
+    router.push("/step-two");
+  }
 
   return (
     <View style={styles.container}>
@@ -21,7 +31,7 @@ export default function StepOne() {
       <ScrollView style={styles.content}>
         <Text style={styles.label}>Nome:</Text>
         <Input
-          name="nome"
+          name="name"
           control={control}
           keyboardType="default"
           placeholder="Digite seu nome..."
@@ -55,7 +65,7 @@ export default function StepOne() {
           error={errors?.age?.message}
         />
 
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={handleSubmit(handleNextStep)}>
           <Text style={styles.buttonText}>Avançar</Text>
         </Pressable>
       </ScrollView>
