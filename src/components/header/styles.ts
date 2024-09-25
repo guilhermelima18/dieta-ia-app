@@ -20,14 +20,34 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    marginBottom: 10,
   },
   text: {
     fontSize: 18,
+  },
+  contentTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 30,
     fontWeight: "bold",
     color: colors.background,
-    marginTop: 10,
+  },
+  button: {
+    backgroundColor: colors.blue,
+    height: 40,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

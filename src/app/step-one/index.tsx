@@ -7,14 +7,22 @@ import { styles } from "@/src/styles/step-one";
 import { Input } from "@/src/components/input";
 import { stepOneSchema, StepOneSchemaType } from "@/src/validations/step-one";
 import { useStepsStore } from "@/src/store/step-data";
+import { useEffect } from "react";
 
 export default function StepOne() {
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<StepOneSchemaType>({
     resolver: zodResolver(stepOneSchema),
+    defaultValues: {
+      name: "",
+      age: "",
+      height: "",
+      weight: "",
+    },
   });
 
   const { setStepOne } = useStepsStore();
@@ -23,6 +31,13 @@ export default function StepOne() {
     setStepOne(data);
     router.push("/step-two");
   }
+
+  useEffect(() => {
+    setValue("name", "");
+    setValue("age", "");
+    setValue("height", "");
+    setValue("weight", "");
+  }, []);
 
   return (
     <View style={styles.container}>
